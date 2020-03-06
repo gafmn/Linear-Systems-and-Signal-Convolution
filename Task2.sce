@@ -26,7 +26,6 @@ function [w] = MakeW(a, x)
     lx = length(x)
     for i = 1:lx
         w(i) = GetWn(w, a, x, i)
-        mprintf("W: %d / %d\n", i, lx)
     end
 endfunction
 
@@ -35,19 +34,53 @@ function [y] = MakeY(b, w)
     lw = length(w)
     for i = 1:length(w)
         y(i) = GetYn(b, w, i)
-        mprintf("Y: %d / %d\n", i, lw)
     end
 endfunction
 
 function [y] = IIR(x, a, b)
+    mprintf("Started IIR.\n")
+    mprintf("Building W\.\.\. ")
     w = MakeW(a, x)
+    mprintf("Done.\nBuilding Y\.\.\. ")
     y = MakeY(b, w)
+    mprintf("Done.\n")
 endfunction
 
-[x, fs] = wavread("data/voice.wav")
-plot(x)
-a = [-0.3769782747249014, -0.19680764477614976]
-b = [0.40495734254626874, -0.8099146850925375, 0.4049573425462687]
-y = IIR(x, a, b)
-wavwrite(y, fs, "result.wav")
-plot(y)
+function [y] = ApplyHighpass(x)
+    mprintf("Applying highpass filter.\n")
+    a = [-0.3769782747249014, -0.19680764477614976]
+    b = [0.40495734254626874, -0.8099146850925375, 0.4049573425462687]
+    y = IIR(x, a, b)
+    mprintf("Highpass done.\n")
+endfunction
+
+function [y] = ApplyLowpass(x)
+    mprintf("Applying lowpass filter.\n")
+    a = [1.9733442497812987, -0.9736948719763]
+    b = [0.00008765554875401547, 0.00017531109750803094, 0.00008765554875401547]
+    y = IIR(x, a, b)
+    mprintf("Lowpass done.\n")
+endfunction
+
+function [] = LoadLowpassSave(filename, savepath)
+    mprintf("Loading %s\.\.\. ", filename)
+    [x, fs] = wavread(filename)
+    mprintf("Done.\n", filename)
+    y = ApplyLowpass(x)
+    mprintf("Saving %s\.\.\. ", savepath)
+    wavwrite(y, fs, savepath)
+    mprintf("Done.\n", filename)
+endfunction
+
+function [] = LoadHighpassSave(filename, savepath)
+    mprintf("Loading %s\.\.\. ", filename)
+    [x, fs] = wavread(filename)
+    mprintf("Done.\n", filename)
+    y = ApplyHighpass(x)
+    mprintf("Saving %s\.\.\. ", savepath)
+    wavwrite(y, fs, savepath)
+    mprintf("Done.\n", filename)
+endfunction
+
+LoadLowpassSave("data/Violin_Viola_Cello_Bass.wav", "lowpass_instruments.wav")
+LoadHighpassSave("data/Violin_Viola_Cello_Bass.wav", "highpass_instruments.wav")
