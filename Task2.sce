@@ -14,7 +14,7 @@ endfunction
 function [yn] = GetYn(b, w, n)
     yn = 0
     for i = 1:length(b)
-        if (n - i < 1) 
+        if (n - i < 0) 
             break
         end
         yn = yn + (b(i) * w(n-i+1))
@@ -32,7 +32,7 @@ endfunction
 function [y] = MakeY(b, w)
     y = []
     lw = length(w)
-    for i = 1:length(w)
+    for i = 1:lw
         y(i) = GetYn(b, w, i)
     end
 endfunction
@@ -56,7 +56,7 @@ endfunction
 
 function [y] = ApplyLowpass(x)
     mprintf("Applying lowpass filter.\n")
-    a = [1.9733442497812987, -0.9736948719763]
+    a = [-1.9733442497812987, 0.9736948719763]
     b = [0.00008765554875401547, 0.00017531109750803094, 0.00008765554875401547]
     y = IIR(x, a, b)
     mprintf("Lowpass done.\n")
