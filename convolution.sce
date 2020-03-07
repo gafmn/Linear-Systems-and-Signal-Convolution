@@ -22,8 +22,8 @@ function[f, g] = pad(f, g)
     g = [g, zeros(1, m - length(g))]
 endfunction
 
-x = [1, 2, 3, 5]
-g = [0, 4]
+x = [0:0.01:3]
+g = [0:0.5:4]
 
 [x,g] = pad(x,g)
 
@@ -33,4 +33,8 @@ g = [0, 4]
 
 
 y = mtlb_t(convolve(matr, mtlb_t(g)))
+res = conv(x, g)
+disp("Inside function")
+disp(res)
+disp("Our function")
 disp(y)
