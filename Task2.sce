@@ -1,5 +1,5 @@
 // y[n] = b0 * w[n] + b1 * w[n-1]...
-// w[n] = x[n] - a1 * w[n-1] - a2 * w[n-2]...
+// w[n] = x[n] + a1 * w[n-1] + a2 * w[n-2]...
 
 function [wn] = GetWn(w, a, x, n)
     wn = x(n)
@@ -7,7 +7,7 @@ function [wn] = GetWn(w, a, x, n)
         if (n - i < 1)
             break
         end
-        wn = wn - (a(i) * w(n-i))
+        wn = wn + (a(i) * w(n-i))
     end
 endfunction
 
@@ -56,7 +56,7 @@ endfunction
 
 function [y] = ApplyLowpass(x)
     mprintf("Applying lowpass filter.\n")
-    a = [-1.9733442497812987, 0.9736948719763]
+    a = [1.9733442497812987, -0.9736948719763]
     b = [0.00008765554875401547, 0.00017531109750803094, 0.00008765554875401547]
     y = IIR(x, a, b)
     mprintf("Lowpass done.\n")
