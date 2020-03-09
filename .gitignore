@@ -1,2 +1,4 @@
 *.swp
 ./*.wav
+.DS_Store
+
