@@ -82,5 +82,5 @@ function [] = LoadHighpassSave(filename, savepath)
     mprintf("Done.\n", filename)
 endfunction
 
-LoadLowpassSave("/Users/madina.gafarova/Innopolis/DSP/LinearSystems_convolution/data/Violin_Viola_Cello_Bass.wav", "data/lowpass_instruments.wav")
-LoadHighpassSave("/Users/madina.gafarova/Innopolis/DSP/LinearSystems_convolution/data/Violin_Viola_Cello_Bass.wav", "data/highpass_instruments.wav")
+LoadLowpassSave("data/Violin_Viola_Cello_Bass.wav", "data/lowpass_instruments.wav")
+LoadHighpassSave("data/Violin_Viola_Cello_Bass.wav", "data/highpass_instruments.wav")
