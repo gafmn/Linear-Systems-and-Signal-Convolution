@@ -1,3 +1,7 @@
+filename_hlop = "hlop.wav"
+filename_another = "./data/drums.wav"
+savepath = "./"
+
 function[y] = convolve(f, g)
     y = f * g;
 endfunction;
@@ -22,19 +26,25 @@ function[f, g] = pad(f, g)
     g = [g, zeros(1, m - length(g))]
 endfunction
 
-x = [0:0.01:3]
-g = [0:0.5:4]
 
-[x,g] = pad(x,g)
+function[] = apply_conv(filename1, filename2)
+    [x1, fs] =  wavread(filename1)
+    [x2, fs] = wavread(filename2)
+    [x, g] = pad(x1, x2)
+    [matr] = produceShiftMatrix(x)
+    y = mtlb_t(convolve(matr, mtlb_t(g)))
+    disp(y)
+endfunction
+    
+//[x,g] = pad(x,g)
+
+    
+//[matr] = produceShiftMatrix(x)
 
 
-[matr] = produceShiftMatrix(x)
-
-
-
-y = mtlb_t(convolve(matr, mtlb_t(g)))
-res = conv(x, g)
-disp("Inside function")
-disp(res)
-disp("Our function")
-disp(y)
+//y = mtlb_t(convolve(matr, mtlb_t(g)))
+//res = conv(x, g)
+//disp("Inside function")
+//disp(res)
+//disp("Our function")
+//disp(y)
