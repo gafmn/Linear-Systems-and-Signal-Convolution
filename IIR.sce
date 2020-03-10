@@ -1,6 +1,10 @@
 // y[n] = b0 * w[n] + b1 * w[n-1]...
 // w[n] = x[n] + a1 * w[n-1] + a2 * w[n-2]...
 
+SAMPLE_PATH = "./data/Violin_Viola_Cello_Bass.wav"
+LOWPASS_SAVEPATH = "./results/LOWPASS_Violin_Viola_Cello_Bass.wav"
+HIGHPASS_SAVEPATH = "./results/HIGHPASS_Violin_Viola_Cello_Bass.wav"
+
 function [wn] = GetWn(w, a, x, n)
     wn = x(n)
     for i = 1:length(a) 
@@ -82,5 +86,5 @@ function [] = LoadHighpassSave(filename, savepath)
     mprintf("Done.\n", filename)
 endfunction
 
-LoadLowpassSave("data/Violin_Viola_Cello_Bass.wav", "lowpass_instruments.wav")
-LoadHighpassSave("data/Violin_Viola_Cello_Bass.wav", "highpass_instruments.wav")
+LoadLowpassSave(SAMPLE_PATH, LOWPASS_SAVEPATH)
+LoadHighpassSave(SAMPLE_PATH, HIGHPASS_SAVEPATH)
