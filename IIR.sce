@@ -66,7 +66,7 @@ function [y] = ApplyLowpass(x)
     mprintf("Lowpass done.\n")
 endfunction
 
-function [] = LoadLowpassSave(filename, savepath)
+function [x, y] = LoadLowpassSave(filename, savepath)
     mprintf("Loading %s\.\.\. ", filename)
     [x, fs] = wavread(filename)
     mprintf("Done.\n", filename)
@@ -76,7 +76,7 @@ function [] = LoadLowpassSave(filename, savepath)
     mprintf("Done.\n", filename)
 endfunction
 
-function [] = LoadHighpassSave(filename, savepath)
+function [y] = LoadHighpassSave(filename, savepath)
     mprintf("Loading %s\.\.\. ", filename)
     [x, fs] = wavread(filename)
     mprintf("Done.\n", filename)
@@ -86,5 +86,21 @@ function [] = LoadHighpassSave(filename, savepath)
     mprintf("Done.\n", filename)
 endfunction
 
-LoadLowpassSave(SAMPLE_PATH, LOWPASS_SAVEPATH)
-LoadHighpassSave(SAMPLE_PATH, HIGHPASS_SAVEPATH)
+clf
+[x, y_low] = LoadLowpassSave(SAMPLE_PATH, LOWPASS_SAVEPATH)
+[y_high] = LoadHighpassSave(SAMPLE_PATH, HIGHPASS_SAVEPATH)
+subplot(2, 2, 1)
+plot(y_low, 'g')
+title("Apply lowpass")
+
+subplot(2, 2, 2)
+plot(y_high, 'b')
+title("Apply highpass")
+
+subplot(2, 2, 3)
+plot(x, 'r')
+title("Original signal")
+
+t = 0:1:(length(y_low)-1)
+subplot(2, 2, 4)
+plot(t', y_low,'g', t', y_high, 'b')
