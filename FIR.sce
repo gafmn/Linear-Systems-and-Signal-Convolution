@@ -3,6 +3,7 @@ DATA_PATH = "./data/"
 VOICE_NAME = "voice.wav"
 DRUMS_NAME = "drums.wav"
 VIOLIN_NAME = "violin.wav"
+PIZZ_NAME = "pizz.wav"
 SPEECH_NAME = "speech.wav"
 
 SAVE_PATH = "./results/"
@@ -15,7 +16,7 @@ x_voice_b = 0
 y_voice_b = 0
 
 function[f, g, l] = Pad(f, g)
-    l = length(f) + length(g) - 1
+    l = length(f(1,:)) + length(g) - 1
     f = [f(1,:), zeros(1, l - length(f(1,:)))]
     g = [g, zeros(1, l - length(g))]
 endfunction
@@ -90,6 +91,9 @@ h2 = legend(DRUMS_NAME)
 
 [conv_violin, original_violin] = LoadSaveConv(VIOLIN_NAME, IRC_NAME)
 [in_conv_violin] = LoadSaveBuiltinConv(VIOLIN_NAME, IRC_NAME)
+
+[conv_pizz, original_pizz] = LoadSaveConv(PIZZ_NAME, IRC_NAME)
+[in_conv_pizz] = LoadSaveBuiltinConv(PIZZ_NAME, IRC_NAME)
 
 
 
